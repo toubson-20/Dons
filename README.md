@@ -1,2 +1,2 @@
 # Dons
-Application de dons (organe, Argent)
+Application de dons (sang, Argent)
