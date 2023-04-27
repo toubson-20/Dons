@@ -43,6 +43,11 @@ class Hopital
         $this->campagne = new ArrayCollection();
     }
 
+    public function __toString(): string
+    {
+        return $this->nom . ' ' . $this->adresse . ' ' . $this->telephone . ' ' . $this->siteWeb;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
