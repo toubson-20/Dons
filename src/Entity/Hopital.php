@@ -27,6 +27,9 @@ class Hopital
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $siteWeb = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $ville = null;
+
     #[ORM\OneToOne(inversedBy: 'departement', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Dons $dons = null;
@@ -121,6 +124,18 @@ class Hopital
     public function setDepartement(?Departement $departement): self
     {
         $this->departement = $departement;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->ville;
+    }
+
+    public function setVille(string $ville): self
+    {
+        $this->ville = $ville;
 
         return $this;
     }

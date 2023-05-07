@@ -21,8 +21,8 @@ class Departement
     #[ORM\Column]
     private ?int $code = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $ville = null;
+    // #[ORM\Column(length: 255)]
+    // private ?string $ville = null;
 
     #[ORM\Column(length: 255)]
     private ?string $region = null;
@@ -67,17 +67,17 @@ class Departement
         return $this;
     }
 
-    public function getVille(): ?string
-    {
-        return $this->ville;
-    }
+    // public function getVille(): ?string
+    // {
+    //     return $this->ville;
+    // }
 
-    public function setVille(string $ville): self
-    {
-        $this->ville = $ville;
+    // public function setVille(string $ville): self
+    // {
+    //     $this->ville = $ville;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getRegion(): ?string
     {

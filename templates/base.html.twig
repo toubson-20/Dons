@@ -18,12 +18,12 @@
 		<meta
 		name="author" content="">
 		<!-- bootstrap css -->
-		<link
-		rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/axentix@2.3.0/dist/axentix.min.css">
+		{# axentix #}
 		<!-- style css -->
 		<link
-		rel="stylesheet" href="css/style.css">
-		<!-- Responsive-->
+		rel="stylesheet" href="css/style.css"> <!-- Responsive-->
 		<link
 		rel="stylesheet" href="css/responsive.css">
 		<!-- fevicon -->
@@ -49,6 +49,6 @@
 			{{ encore_entry_script_tags('app') }}
 		{% endblock %}
 	</head>
-	<body class="main-layout"> {% block body %}{% endblock %}
+	<body class="main-layout layout-sidenav-fixed"> {% block body %}{% endblock %}
 		</body>
 	</html>

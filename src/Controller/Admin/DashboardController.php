@@ -8,6 +8,7 @@ use App\Entity\Donneur;
 use App\Entity\Dons;
 use App\Entity\Hopital;
 use App\Entity\Points;
+use App\Entity\Utilisateur;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -55,6 +56,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Campagne', 'fas fa-leaf', Campagne::class);
         yield MenuItem::linkToCrud('Donneur', 'fas fa-heart', Donneur::class);
         yield MenuItem::linkToCrud('Dons', 'fas fa-tint', Dons::class);
+        yield MenuItem::linkToCrud('Utilisateur', 'fas fa-user', Utilisateur::class);
         yield MenuItem::linkToCrud('Points', 'fas fa-coins', Points::class);
     }
 }

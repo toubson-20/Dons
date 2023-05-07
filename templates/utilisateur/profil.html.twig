@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UtilisateurController!
+{% endblock %}
+
+{% block javascripts %}
+	<script src="https://cdn.jsdelivr.net/npm/axentix@2.3.0/dist/axentix.min.js"></script>
+{% endblock %}
+
+{% block body %}
+	{# {% include "menu/header.html.twig" %}
+																																					<div class="full_bg"> #}
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+	</style>
+
+
+	<div id="example-sidenav" data-ax="sidenav" class="sidenav shadow-1 sidenav-fixed white">
+		{% for message in app.flashes('message') %}
+			<div id="alert" class="p-3 my-2 rounded-1 green light-4 text-green text-dark-4 bd-solid bd-green bd-dark-1 bd-1">
+				<span class="iconify-inline" data-icon="mdi:check-bold">{{message}}</span>
+			</div>
+		{% endfor %}
+		{% for message in app.flashes('succes') %}
+			<div class="p-3 my-2 rounded-2 success">{{message}}</div>
+		{% endfor %}
+		<div class="sidenav-header">
+			<img class="sidenav-logo dropshadow-1" src="your_img_path" alt="Logo"/>
+		</div>
+		<a href="#" class="sidenav-link active">Mon profil</a>
+		<a href="#" class="sidenav-link">Mes dons</a>
+		<a href="#" class="sidenav-link">Link 3</a>
+		<a href="#" class="sidenav-link">Link 4</a>
+	</div>
+
+	<main>
+		<!-- Code here the main content -->
+		<button data-target="example-sidenav" class="btn rounded-1 press amaranth dark-1 hide-md-up">
+			Open sidenav
+		</button>
+	</main>
+
+	<div class="example-wrapper">
+		<div class="grix xs2">
+			<div>Prénom</div>
+			<div>{{ utilisateur.nom }}</div>
+			<div>Nom</div>
+			<div>{{ utilisateur.prenom }}</div>
+			<div>Mail</div>
+			<div>{{ utilisateur.email }}</div>
+			<div>Téléphone</div>
+			<div>{{ utilisateur.telephone }}</div>
+			<div>
+				<a href="{{ path('app_edit_profil') }}" class="btn shadow-1 rounded-1 blue">Modifier profil</a>
+				<a href="{{ path('app_edit_password') }}" " class=" btn shadow-1 rounded-1 blue">Modifier mot de passe</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}

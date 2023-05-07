@@ -27,8 +27,8 @@ class Donneur
     #[ORM\Column(length: 20)]
     private ?string $telephone = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $sang = null;
+    // #[ORM\Column(length: 50)]
+    // private ?string $sang = null;
 
     #[ORM\OneToMany(mappedBy: 'donneur', targetEntity: Dons::class)]
     private Collection $dons;
@@ -99,17 +99,17 @@ class Donneur
         return $this;
     }
 
-    public function getSang(): ?string
-    {
-        return $this->sang;
-    }
+    // public function getSang(): ?string
+    // {
+    //     return $this->sang;
+    // }
 
-    public function setSang(string $sang): self
-    {
-        $this->sang = $sang;
+    // public function setSang(string $sang): self
+    // {
+    //     $this->sang = $sang;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * @return Collection<int, Dons>
