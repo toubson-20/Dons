@@ -30,25 +30,28 @@ class Hopital
     #[ORM\Column(length: 255)]
     private ?string $ville = null;
 
-    #[ORM\OneToOne(inversedBy: 'departement', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Dons $dons = null;
-
     #[ORM\ManyToOne(inversedBy: 'hopitals')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?Departement $departement = null;
+
+    #[ORM\OneToMany(mappedBy: 'hopital', targetEntity: Dons::class, orphanRemoval: true)]
+    private Collection $dons;
 
     #[ORM\ManyToMany(targetEntity: Campagne::class, inversedBy: 'hopitals')]
     private Collection $campagne;
 
+    #[ORM\OneToMany(mappedBy: 'hopital', targetEntity: Disponibilites::class)]
+    private Collection $disponibilites;
+
     public function __construct()
     {
+        $this->dons = new ArrayCollection();
         $this->campagne = new ArrayCollection();
+        $this->disponibilites = new ArrayCollection();
     }
 
     public function __toString(): string
     {
-        return $this->nom . ' ' . $this->adresse . ' ' . $this->telephone . ' ' . $this->siteWeb;
+        return $this->nom;
     }
 
     public function getId(): ?int
@@ -104,14 +107,16 @@ class Hopital
         return $this;
     }
 
-    public function getDons(): ?Dons
+
+
+    public function getVille(): ?string
     {
-        return $this->dons;
+        return $this->ville;
     }
 
-    public function setDons(Dons $dons): self
+    public function setVille(string $ville): self
     {
-        $this->dons = $dons;
+        $this->ville = $ville;
 
         return $this;
     }
@@ -128,14 +133,32 @@ class Hopital
         return $this;
     }
 
-    public function getVille(): ?string
+    /**
+     * @return Collection<int, Dons>
+     */
+    public function getDons(): Collection
     {
-        return $this->ville;
+        return $this->dons;
     }
 
-    public function setVille(string $ville): self
+    public function addDon(Dons $don): self
     {
-        $this->ville = $ville;
+        if (!$this->dons->contains($don)) {
+            $this->dons->add($don);
+            $don->setHopital($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDon(Dons $don): self
+    {
+        if ($this->dons->removeElement($don)) {
+            // set the owning side to null (unless already changed)
+            if ($don->getHopital() === $this) {
+                $don->setHopital(null);
+            }
+        }
 
         return $this;
     }
@@ -160,6 +183,36 @@ class Hopital
     public function removeCampagne(Campagne $campagne): self
     {
         $this->campagne->removeElement($campagne);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Disponibilites>
+     */
+    public function getDisponibilites(): Collection
+    {
+        return $this->disponibilites;
+    }
+
+    public function addDisponibilite(Disponibilites $disponibilite): self
+    {
+        if (!$this->disponibilites->contains($disponibilite)) {
+            $this->disponibilites->add($disponibilite);
+            $disponibilite->setHopital($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDisponibilite(Disponibilites $disponibilite): self
+    {
+        if ($this->disponibilites->removeElement($disponibilite)) {
+            // set the owning side to null (unless already changed)
+            if ($disponibilite->getHopital() === $this) {
+                $disponibilite->setHopital(null);
+            }
+        }
 
         return $this;
     }

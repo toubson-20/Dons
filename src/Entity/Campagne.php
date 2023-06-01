@@ -25,20 +25,25 @@ class Campagne
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_fin = null;
 
-    #[ORM\Column(length: 300)]
+    #[ORM\Column(length: 500)]
     private ?string $description = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $adresse = null;
 
     #[ORM\ManyToMany(targetEntity: Hopital::class, mappedBy: 'campagne')]
     private Collection $hopitals;
 
-    #[ORM\ManyToMany(targetEntity: Donneur::class, mappedBy: 'campagne')]
-    private Collection $donneurs;
-
     public function __construct()
     {
         $this->hopitals = new ArrayCollection();
-        $this->donneurs = new ArrayCollection();
     }
+
+    public function __toString(): string
+    {
+        return $this->intitule;
+    }
+
 
     public function getId(): ?int
     {
@@ -48,6 +53,11 @@ class Campagne
     public function getIntitule(): ?string
     {
         return $this->intitule;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
     }
 
     public function setIntitule(string $intitule): self
@@ -93,6 +103,13 @@ class Campagne
         return $this;
     }
 
+    public function setAdresse(string $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Hopital>
      */
@@ -115,33 +132,6 @@ class Campagne
     {
         if ($this->hopitals->removeElement($hopital)) {
             $hopital->removeCampagne($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Donneur>
-     */
-    public function getDonneurs(): Collection
-    {
-        return $this->donneurs;
-    }
-
-    public function addDonneur(Donneur $donneur): self
-    {
-        if (!$this->donneurs->contains($donneur)) {
-            $this->donneurs->add($donneur);
-            $donneur->addCampagne($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDonneur(Donneur $donneur): self
-    {
-        if ($this->donneurs->removeElement($donneur)) {
-            $donneur->removeCampagne($this);
         }
 
         return $this;

@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Campagne
+{% endblock %}
+
+
+{% block body %}
+	<style>
+		.card-detail {
+			width: 50%;
+			margin-left: 27%;
+			text-align: center;
+			margin-top: 200px;
+		}
+	</style>
+	{% include "menu/header.html.twig" %}
+	<div class="row">
+		<div class="col-6">
+			<div class=" card-detail card shadow-1 hoverable-1 rounded-3 white center">
+				<div class="card-header">{{ campagne.intitule }}</div>
+				<div class="card-content">
+					<p>
+						{{ campagne.description }}
+					</p>
+					<br>
+					<p>
+						Adresse :
+						{{ campagne.adresse }}
+					</p>
+					<br>
+					<p>
+						Date de début :
+						{{ campagne.dateDebut | date("d/m/Y") }}
+					</p>
+					<br>
+					<p>
+						Date de fin :
+						{{ campagne.dateFin | date("d/m/Y") }}
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-6"></div>
+	</div>
+	{% include "menu/footer.html.twig" %}
+{% endblock %}

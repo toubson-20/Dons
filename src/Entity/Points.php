@@ -20,10 +20,7 @@ class Points
     private ?int $quantite = null;
 
     #[ORM\ManyToOne(inversedBy: 'points')]
-    private ?Donneur $donneur = null;
-
-    #[ORM\OneToOne(mappedBy: 'points', cascade: ['persist', 'remove'])]
-    private ?Dons $dons = null;
+    private ?Utilisateur $utilisateur = null;
 
     public function getId(): ?int
     {
@@ -54,36 +51,14 @@ class Points
         return $this;
     }
 
-    public function getDonneur(): ?Donneur
+    public function getUtilisateur(): ?Utilisateur
     {
-        return $this->donneur;
+        return $this->utilisateur;
     }
 
-    public function setDonneur(?Donneur $donneur): self
+    public function setUtilisateur(?Utilisateur $utilisateur): self
     {
-        $this->donneur = $donneur;
-
-        return $this;
-    }
-
-    public function getDons(): ?Dons
-    {
-        return $this->dons;
-    }
-
-    public function setDons(?Dons $dons): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($dons === null && $this->dons !== null) {
-            $this->dons->setPoints(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($dons !== null && $dons->getPoints() !== $this) {
-            $dons->setPoints($this);
-        }
-
-        $this->dons = $dons;
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }

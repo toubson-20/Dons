@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UtilisateurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -37,6 +39,14 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Dons::class)]
+    private Collection $dons;
+
+    public function __construct()
+    {
+        $this->dons = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -135,6 +145,11 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function __toString()
+    {
+        return $this->nom;
+    }
+
     /**
      * @see UserInterface
      */
@@ -142,5 +157,35 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, Dons>
+     */
+    public function getDons(): Collection
+    {
+        return $this->dons;
+    }
+
+    public function addDon(Dons $don): self
+    {
+        if (!$this->dons->contains($don)) {
+            $this->dons->add($don);
+            $don->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDon(Dons $don): self
+    {
+        if ($this->dons->removeElement($don)) {
+            // set the owning side to null (unless already changed)
+            if ($don->getUtilisateur() === $this) {
+                $don->setUtilisateur(null);
+            }
+        }
+
+        return $this;
     }
 }

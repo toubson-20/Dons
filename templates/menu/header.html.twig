@@ -1,61 +1,29 @@
-<!-- loader  -->
-<div class="loader_bg">
-	<div class="loader"><img src="images/loading.gif" alt="#"/></div>
-</div>
-<!-- end loader -->
-<!-- top -->
-<!-- header -->
-	<header class="header-area"> <div class="left">
-		<a href="Javascript:void(0)">
-			<i class="fa fa-search" aria-hidden="true"></i>
-		</a>
-	</div>
-	<div class="right">
-		<a href="Javascript:void(0)">
-			<i class="fa fa-user" aria-hidden="true"></i>
-		</a>
-	</div>
-	<div class="container">
-		<div class="row d_flex">
-			<div class="col-sm-3 logo_sm">
-				<div class="logo">
-					<a href="index.html"></a>
-				</div>
-			</div>
-			<div class="col-lg-10 offset-lg-1 col-md-12 col-sm-9">
-				<div class="navbar-area">
-					<nav class="site-navbar">
-						<ul>
-							<li>
-								<a class="active" href="index.html">Accueil</a>
-							</li>
-							<li>
-								<a href="about.html">Campagne</a>
-							</li>
-							<li>
-								<a href="action.html">Hopitaux</a>
-							</li>
-							<li>
-								<a href="index.html" class="logo_midle">Dons</a>
-							</li>
-							<li>
-								<a href="news.html">news</a>
-							</li>
-							<li>
-								<a href="doctores.html">doctores</a>
-							</li>
+<style>
+	.navbar-fixed {
+		position: fixed;
+		top: 0;
+		width: 100%;
+		height: 100px;
+		z-index: 1000;
+		background-color: #fff;
+		opacity: 1;
+		padding-bottom: 20px; /* Espacement en dessous de la navbar */
+	}
+</style>
 
-							<li>
-								<a href="contact.html">Contact
-								</a>
-							</li>
-						</ul>
-						<button class="nav-toggler">
-							<span></span>
-						</button>
-					</nav>
-				</div>
+<nav class="navbar-fixed navbar navbar-expand-lg bg-body-tertiary navbar-expand">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="#">Navbar</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
+			<div class="navbar-nav text-center justify-content-between">
+				<a class="nav-link active" aria-current="page" href="#">Home</a>
+				<a class="nav-link" href="#">Features</a>
+				<a class="nav-link" href="#">Pricing</a>
+				<a class="nav-link disabled">Disabled</a>
 			</div>
 		</div>
 	</div>
-</header>
+</nav>

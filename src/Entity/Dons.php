@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\DonsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,14 +25,20 @@ class Dons
     #[ORM\Column(length: 500, nullable: true)]
     private ?string $commentaire = null;
 
-    #[ORM\OneToOne(mappedBy: 'dons', cascade: ['persist', 'remove'])]
+    #[ORM\ManyToOne(inversedBy: 'dons')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Hopital $hopital = null;
 
     #[ORM\ManyToOne(inversedBy: 'dons')]
-    private ?Donneur $donneur = null;
+    private ?Utilisateur $utilisateur = null;
 
-    #[ORM\OneToOne(inversedBy: 'dons', cascade: ['persist', 'remove'])]
-    private ?Points $points = null;
+    #[ORM\OneToMany(mappedBy: 'dons', targetEntity: Disponibilites::class)]
+    private Collection $disponibilites;
+
+    public function __construct()
+    {
+        $this->disponibilites = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -73,43 +81,56 @@ class Dons
         return $this;
     }
 
-    public function gethopital(): ?Hopital
+    public function getHopital(): ?Hopital
     {
         return $this->hopital;
     }
 
-    public function sethopital(Hopital $hopital): self
+    public function setHopital(?Hopital $hopital): self
     {
-        // set the owning side of the relation if necessary
-        if ($hopital->getDons() !== $this) {
-            $hopital->setDons($this);
-        }
-
         $this->hopital = $hopital;
 
         return $this;
     }
 
-    public function getDonneur(): ?Donneur
+    public function getUtilisateur(): ?Utilisateur
     {
-        return $this->donneur;
+        return $this->utilisateur;
     }
 
-    public function setDonneur(?Donneur $donneur): self
+    public function setUtilisateur(?Utilisateur $utilisateur): self
     {
-        $this->donneur = $donneur;
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }
 
-    public function getPoints(): ?Points
+    /**
+     * @return Collection<int, Disponibilites>
+     */
+    public function getDisponibilites(): Collection
     {
-        return $this->points;
+        return $this->disponibilites;
     }
 
-    public function setPoints(?Points $points): self
+    public function addDisponibilite(Disponibilites $disponibilite): self
     {
-        $this->points = $points;
+        if (!$this->disponibilites->contains($disponibilite)) {
+            $this->disponibilites->add($disponibilite);
+            $disponibilite->setDons($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDisponibilite(Disponibilites $disponibilite): self
+    {
+        if ($this->disponibilites->removeElement($disponibilite)) {
+            // set the owning side to null (unless already changed)
+            if ($disponibilite->getDons() === $this) {
+                $disponibilite->setDons(null);
+            }
+        }
 
         return $this;
     }

@@ -1,20 +1,147 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello DonsController!{% endblock %}
+{% block title %}Dons
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	{% include "menu/header.html.twig" %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+	<style>
+		html,
+		body {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/srv/app/src/Controller/DonsController.php'|file_link(0) }}">src/Controller/DonsController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/srv/app/templates/dons/index.html.twig'|file_link(0) }}">templates/dons/index.html.twig</a></code></li>
-    </ul>
-</div>
+		#container {
+			display: flex;
+			height: 100%;
+		}
+
+		#text {
+			width: 40%;
+			position: relative;
+		}
+
+		#map {
+			width: 60%;
+			height: 100%;
+			margin-left: 40%;
+			position: fixed;
+			margin-top: 4rem;
+		}
+
+		.fixed-card {
+			border-radius: 20px;
+			top: 0;
+			position: sticky;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			z-index: 1;
+			padding-top: 2rem;
+		}
+
+		.scroll-cards {
+			margin-top: 1rem;
+			overflow-y: scroll;
+			height: 100%;
+			display: flex;
+			flex-wrap: wrap;
+			align-content: flex-start;
+		}
+
+		.card-scroll {
+			width: 45%;
+			margin: 0.5rem;
+		}
+
+		.card-scroll .card-content {
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+		}
+
+		.btn-search {
+			text-align: center;
+		}
+	</style>
+
+	<div id="container" class="mt-5">
+		<div id="text">
+			<div class="card fixed-card" style="width: 37rem; border-radius: 20px;">
+				<div class="card-body">
+					<h3 class="card-title">Localiser un lieu de don</h3>
+					<form class="form-material" method="POST">
+						<div class="form-field">
+							<label for="ville">Entrer votre ville</label>
+							<input type="text" id="ville" name="ville" class="form-control"/>
+						</div>
+						<div class="form-field">
+							<input type="date" id="date" name="date" class="form-control"/>
+						</div>
+						<br>
+						<a href="" class="btn btn-danger btn-search" style="border-radius: 10px;">
+							<button type="submit">Rechercher</button>
+						</a>
+					</form>
+				</div>
+			</div>
+
+			<div class="scroll-cards">
+				{% for item in hopital %}
+					<div class="card card-scroll col-10 hoverable-1 rounded-3 white ml-5 5 text-center">
+						<div class="card-content">
+							<p>
+								<b>{{ item.ville | upper }}</b>
+								({{ item.nom }})</p>
+							<p>{{ item.disponibilites | length }}
+								disponibilité(s)</p><br>
+							<a href="{{ path('app_create_dons', {'id': item.id}) }}" class="btn btn-danger" style="border-radius: 10px; width: 90%;">Prendre rendez-vous</a>
+
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+
+		<div id="map"></div>
+	</div>
+	{# {% include "menu/footer.html.twig" %}	 #}
+
+	{# Script pour la carte #}
+	<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+	<script>
+		// Coordonnées des lieux choisis
+var locations = [
+{
+lat: 48.8584,
+lng: 2.2945,
+name: 'Lieu 1'
+}, {
+lat: 48.856,
+lng: 2.3522,
+name: 'Lieu 2'
+}
+// Ajoutez les autres lieux choisis avec leurs coordonnées et noms
+];
+
+// Créez la carte Leaflet
+var map = L.map('map').setView([
+48.8566, 2.3522
+], 12);
+// Coordonnées de Paris, par exemple
+
+// Ajoutez la couche de tuiles OpenStreetMap à la carte
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: 'Carte OpenStreetMap'}).addTo(map);
+
+// Ajoutez des marqueurs pour les lieux choisis
+locations.forEach(function (location) {
+L.marker([location.lat, location.lng]).addTo(map).bindPopup(location.name);
+});
+	</script>
+
+	{% block javascripts %}{% endblock %}
+
+	{# {% include "menu/footer.html.twig" %} #}
 {% endblock %}

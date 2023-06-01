@@ -21,16 +21,13 @@ class Departement
     #[ORM\Column]
     private ?int $code = null;
 
-    // #[ORM\Column(length: 255)]
-    // private ?string $ville = null;
-
     #[ORM\Column(length: 255)]
     private ?string $region = null;
 
     #[ORM\Column(length: 255)]
     private ?string $pays = null;
 
-    #[ORM\OneToMany(mappedBy: 'departement', targetEntity: Hopital::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'departement', targetEntity: Hopital::class)]
     private Collection $hopitals;
 
     public function __construct()
@@ -131,5 +128,10 @@ class Departement
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->nom;
     }
 }

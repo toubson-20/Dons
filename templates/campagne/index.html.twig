@@ -1,20 +1,77 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CampagneController!{% endblock %}
+{% block title %}Hello CampagneController!
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<style>
+		.example-wrapper {
+			margin: 1em auto;
+			max-width: 800px;
+			width: 95%;
+			font: 18px / 1.5 sans-serif;
+		}
+		.example-wrapper code {
+			background: #F5F5F5;
+			padding: 2px 6px;
+		}
+		.slid {
+			background-image: url('chemin/vers/mon-image.jpg');
+			height: 20rem;
+			width: 100%;
+			background-color: whitered;
+			position: sticky;
+		}
+		.content-slid {
+			margin-top: 10%;
+			z-index: 1;
+			text-align: center;
+			border: 1px;
+			width: 50%;
+			margin-left: 25%;
+		}
+		.card {
+			width: 50%;
+			margin-left: 50%;
+			justify-content: center;
+			align-items: center;
+			margin-top: 50px;
+			border-radius: 5px;
+		}
+		.content-camp {
+			justify-content: center;
+			align-items: center;
+			margin-right: 30rem;
+			text-align: center;
+		}
+	</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+	{% include "menu/header.html.twig" %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/srv/app/src/Controller/CampagneController.php'|file_link(0) }}">src/Controller/CampagneController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/srv/app/templates/campagne/index.html.twig'|file_link(0) }}">templates/campagne/index.html.twig</a></code></li>
-    </ul>
-</div>
+	<div class="slid">
+		<div class="content-slid border">
+			<b>LES CAMPAGNES A VENIR</b>
+			<p style="margin-top: 10px;">
+				<a href="" class="btn btn-danger" style="border-radius: 5px;">Ajouter une Campagne</a>
+
+
+			</p>
+		</div>
+	</div>
+	<div class="content-camp text-center">
+		{% for item in resultCampagne %}
+			<div class="card">
+				<div class="card-body">
+					<b>{{ item.intitule }}</b>
+					{{ item.dateDebut|date('d/m/Y') }}
+					{{ item.dateFin|date('d/m/Y') }}
+					{{ item.adresse }}
+					{{ item.description }}
+					{{ item.hopital }}
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+
+	{% include "menu/footer.html.twig" %}
 {% endblock %}

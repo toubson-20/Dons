@@ -1,0 +1,159 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Don
+{% endblock %}
+
+{% block body %}
+	<style>
+		.contain {
+			width: 100%;
+			height: 20rem;
+			background-color: rgb(10, 5, 5);
+		}
+
+		.contain a {
+			color: white;
+		}
+
+		.data {
+			z-index: 1;
+			color: white;
+			text-align: center;
+			margin-top: 5rem;
+		}
+
+		.contain-detail {
+			position: center;
+		}
+
+		.contain-detail li {
+			margin-top: 5px;
+		}
+
+		.info {
+			background-color: rgb(183, 215, 247);
+			height: 12rem;
+		}
+		.info-1 {
+			margin-top: 2rem; /* Ajustez la valeur en fonction de votre besoin */
+		}
+
+		.card {
+			width: 50%;
+			text-align: center;
+			margin-left: 25rem;
+		}
+
+		.card p {
+			padding-top: 1rem;
+		}
+	</style>
+	{# {% include "menu/header.html.twig" %} #}
+
+	<div class="contain">
+		<div>
+			<a href="{{ path('app_dons') }}">revenir à la carte</a>
+		</div>
+		<div class="data">
+			<h1>{{ hopital.nom | upper }}</h1>
+			<span>
+				-
+				{{ hopital.departement | upper }}
+				({{ hopital.ville }})</span>
+		</div>
+	</div>
+
+
+	<div class="contain-detail">
+		<div class="info">
+			<div class="info-1">
+				<p class="first-paragraph">Avant de prendre RDV, vérifiez que vous êtes bien sur le planning correspondant à votre don.Informations importantes:</p>
+				<p>
+					<ul>
+						<li>Il faut respecter un délai de 8 semaines entre 2 dons de sang, 4 semaines entre 2 dons de plaquettes, 2 semaines entre 2 dons de plasma.</li>
+						<li>Avant de venir, vérifiez que vous pouvez donner: Puis-je donner ?</li>
+						<li>Vous désirez venir accompagné-e ? Avec plaisir ! Proposez à vos amis, collègues, parents de venir faire un don avec vous et faire le test ci-dessus avant de s’inscrire.</li>
+						<li>
+							<b>Le Jour J:</b>
+							buvez bien, mangez, prenez une pièce d'identité et en route!</li>
+					</ul>
+				</p>
+			</div>
+		</div>
+
+		<div>
+			{% for item in disponibilites %}
+				<p>{{item}}</p>
+			{% endfor %}
+		</div>
+
+		<div>
+			{{ form_start(form) }}
+			<div class="form-group">
+				{{ form_label(form.type) }}
+				{{ form_widget(form.type, {'attr': {'class': 'my-custom-select'},'value': "Sang", 'data': "Sang"}) }}
+			</div>
+
+			<div class="form-group">
+				{{ form_label(form.date) }}
+				{{ form_widget(form.date, {'attr': {'class': 'my-custom-input'}}) }}
+			</div>
+
+			<div class="form-group">
+				{{ form_label(form.commentaire) }}
+				{{ form_widget(form.commentaire, {'attr': {'class': 'my-custom-textarea'}}) }}
+			</div>
+
+			<div class="form-group">
+				{{ form_label(form.hopital) }}
+				{{ form_widget(form.hopital, {'attr': {'class': 'my-custom-input'},'value': hopital.id, 'data': hopital.id}) }}
+			</div>
+
+			<div class="form-group">
+				{{ form_label(form.disponibilites) }}
+				{{ form_widget(form.disponibilites, {'attr': {'class': 'my-custom-input'}}) }}
+			</div>
+
+			<div class="form-group">
+				{{ form_label(form.utilisateur) }}
+				{{ form_widget(form.utilisateur, {'attr': {'class': 'my-custom-input'}, 'value': utilisateur.id, 'data': utilisateur.id}) }}
+			</div>
+
+			<div class="form-group">
+				{{ form_widget(form.Valider, {'attr': {'class': 'my-custom-button'}}) }}
+			</div>
+			{{ form_end(form) }}
+
+		</div>
+
+		<div>
+			<h4 class="text-center">COMMENT VOUS RENDRE AU
+				{{ hopital.nom }}?</h4>
+			<br>
+
+			<div class="card shadow-1 hoverable-1 rounded-3 white">
+				<div class="card-header">{{ hopital.nom }}</div>
+				<div class="card-content">
+					<p>Adresse :
+						<span>
+							<b>{{ hopital.adresse }}</b>
+						</span>
+					</p>
+					<p>Téléphone :
+						<span>
+							<b>{{ hopital.telephone }}</b>
+						</span>
+					</p>
+					<p>Site web :
+						<span>
+							<b>{{ hopital.siteWeb }}</b>
+						</span>
+					</p>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	{# {% include "menu/footer.html.twig" %} #}
+{% endblock %}

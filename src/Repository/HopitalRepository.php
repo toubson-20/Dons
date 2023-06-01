@@ -39,28 +39,23 @@ class HopitalRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Hopital[] Returns an array of Hopital objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('h')
-//            ->andWhere('h.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('h.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    // /**
+    //  * @return Hopital[] Returns an array of Hopital objects
+    //  */
+    public function paginationQuery()
+    {
+        return $this->createQueryBuilder('h')
+            ->orderBy('h.id', 'ASC')
+            ->getQuery();
+    }
 
-//    public function findOneBySomeField($value): ?Hopital
-//    {
-//        return $this->createQueryBuilder('h')
-//            ->andWhere('h.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    public function findOneBySomeField($value): ?Hopital
+    //    {
+    //        return $this->createQueryBuilder('h')
+    //            ->andWhere('h.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

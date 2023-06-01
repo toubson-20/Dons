@@ -4,7 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Campagne;
 use App\Entity\Departement;
-use App\Entity\Donneur;
+use App\Entity\Disponibilites;
 use App\Entity\Dons;
 use App\Entity\Hopital;
 use App\Entity\Points;
@@ -52,11 +52,10 @@ class DashboardController extends AbstractDashboardController
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
         yield MenuItem::linktoRoute('Accueil', 'fas fa-home', 'app_hopital');
         yield MenuItem::linkToCrud('Hôpital', 'fas fa-hospital', Hopital::class);
+        yield MenuItem::linkToCrud('Disponibilités', 'fas fa-calendar', Disponibilites::class);
         yield MenuItem::linkToCrud('Département', 'fas fa-map-marker-alt', Departement::class);
         yield MenuItem::linkToCrud('Campagne', 'fas fa-leaf', Campagne::class);
-        yield MenuItem::linkToCrud('Donneur', 'fas fa-heart', Donneur::class);
         yield MenuItem::linkToCrud('Dons', 'fas fa-tint', Dons::class);
         yield MenuItem::linkToCrud('Utilisateur', 'fas fa-user', Utilisateur::class);
-        yield MenuItem::linkToCrud('Points', 'fas fa-coins', Points::class);
     }
 }

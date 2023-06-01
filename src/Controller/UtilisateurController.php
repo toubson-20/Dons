@@ -13,8 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UtilisateurController extends AbstractController
 {
-    #[Route('/utilisateur', name: 'app_utilisateur')]
-    public function index(Request $request, EntityManagerInterface $entityManagerInterface): Response
+    #[Route('/profil', name: 'app_utilisateur')]
+    public function index(): Response
     {
         // récupération de l'utilisateur connecté
         $utilisateur = $this->getUser();
@@ -46,7 +46,7 @@ class UtilisateurController extends AbstractController
         ]);
     }
 
-    // fonctionne malgré l'erreur
+    // fonctionne malgré les erreurs
 
     #[Route('/utilisateur/editPassword', name: 'app_edit_password')]
     public function editPassword(Request $request, UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager)
